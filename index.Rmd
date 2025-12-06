@@ -1,0 +1,63 @@
+---
+title: An R Markdown document converted from "Demo1.ipynb"
+output: html_document
+---
+
+# Start fresh
+
+code for starting fresh?
+
+# get the data
+
+code for opening a file from a url (file in Excel), name it 'fragility23'?
+
+# exploratory commands
+
+find out column names in 'fragility23'?
+
+Check the data types in df?
+
+show me the first 10 rows?
+
+show me the last 10 rows?
+
+# transformative commands
+
+## subsetting
+
+keep some columns:
+Country, Total,
+S1: Demographic Pressures,
+P1: State Legitimacy,
+E2: Economic Inequality into object 'frag23_sub'
+
+## renaming
+
+rename 'frag23_sub' columns, keep var codes  only
+
+## filtering
+
+get me the top ten best countries on the  'E2'  measure from 'frag23_sub'
+
+# some computations
+
+give the statistical description of "frag23_sub"
+
+the value of the worst quartile in Total
+
+show correlations between "S1","E2", "P1"
+
+regress P1 and E2 on S1
+
+# some plotting
+
+give me a plot for the 'P1' variable
+
+visual correlation between S1 and E2
+
+visual of the regression P1 and E2 on S1
+
+```{r}
+1+1
+```
+

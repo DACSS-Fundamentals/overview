@@ -21,7 +21,8 @@ fragility23=rio::import(file = linkGit) #object that will hold the result
 ## find out column names in fragility23
 names(x = fragility23)
 
-## Check the data types to find out if numeric columns have been read as should
+## Check the data types in df
+# let's find out if numeric columns have been read as should
 str(object = fragility23)
 
 ## show me the first 10 rows
@@ -30,16 +31,19 @@ head(x = fragility23,10)
 ##show me the last 10 rows
 tail(fragility23,10)
 
-# Basic manipulation
+# transformativs manipulation
 
-## keep some columns: Country, Total,S1,P1 E2 into object 'frag23_sub'
+## keep some columns: 
+##Country, Total,
+## S1: Demographic Pressures,
+## P1: State Legitimacy,
+## E2: Economic Inequality
+## into object 'frag23_sub'
 grep(pattern = "Country|S1|P1|E2|Total",x = names(fragility23),fixed = F,value = T) # test
 
 keep=grep("Country|S1|P1|E2|Total",names(fragility23),fixed = F,value = T)
 frag23_sub=fragility23[,keep]
 
-## give the statistical description of "frag23_sub"
-summary(object = frag23_sub)
 
 ## rename 'frag23_sub' columns, use S1,P1 E2 only
 names(frag23_sub)[3:5]=c("S1","E2", "P1")
@@ -48,6 +52,14 @@ names(frag23_sub)[3:5]=c("S1","E2", "P1")
 tail(frag23_sub[order(x=-frag23_sub$E2),],10) #option1
 tail(frag23_sub[order(x=-frag23_sub$E2),'Country'],10) #option2
 
+
+## give the statistical description of "frag23_sub"
+summary(object = frag23_sub)
+
+## the value of the worst quartile of Total
+q3_Total=quantile(x = frag23_sub$Total, 
+                  probs = 0.75, 
+                  na.rm = TRUE)
 
 ## show correlations between "S1","E2", "P1"
 cor(x=frag23_sub[,-c(1,2)]) #no 'Country', no "Total'
@@ -64,11 +76,7 @@ summary(model)
 
 library(stargazer) # install.packages("stargazer")
 stargazer(model, 
-          type = "text",  
-          title = "Regression Results for Demographic Pressures",
-          dep.var.labels = "Demographic Pressures",
-          covariate.labels = c("State Legitimacy", "Economic Inequality"),
-          out.header = FALSE)
+          type = "text")
 
 # some plotting
 ## give me a plot for the 'P1' variable
@@ -78,6 +86,8 @@ library(ggplot2) # ggplot2 - standard
 base=ggplot(data = frag23_sub)
 base+ geom_histogram(aes(x=P1)) 
 
+base+ geom_boxplot(aes(x=P1)) 
+
 
 
 ## visual correlation between S1 and E2
@@ -86,10 +96,6 @@ plot(x=frag23_sub$S1, y=frag23_sub$E2)
 base + geom_point(aes(x=S1,y=E2)) 
 
 ## color points if country is on the worst quartile of Total
-q3_Total=quantile(x = frag23_sub$Total, 
-                  probs = 0.75, 
-                  na.rm = TRUE)
-
 frag23_sub$Total>=q3_Total
 frag23_sub$worstQt=frag23_sub$Total>=q3_Total
 
@@ -106,8 +112,5 @@ base + geom_point(aes(x=S1,y=E2,color=worstQt))
 
 #install.packages("sjPlot")
 library(sjPlot)
-plot_models(model,
-            m.labels=c("Demographic Pressures"),
-            axis.labels = c("Economic Inequality","State Legitimacy"),
-            dot.size = 1,line.size = 0.6)
+plot_models(model)
 
