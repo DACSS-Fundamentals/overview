@@ -74,26 +74,16 @@ lm(S1~P1+E2,data=frag23_sub)
 model <- lm(S1 ~ P1 + E2, data = frag23_sub)
 summary(model)
 
-library(stargazer) # install.packages("stargazer")
-stargazer(model, 
-          type = "text")
+
 
 # some plotting
 ## give me a plot for the 'P1' variable
 hist(x = frag23_sub$P1) #base r
 
-library(ggplot2) # ggplot2 - standard
-base=ggplot(data = frag23_sub)
-base+ geom_histogram(aes(x=P1)) 
-
-base+ geom_boxplot(aes(x=P1)) 
-
 
 
 ## visual correlation between S1 and E2
 plot(x=frag23_sub$S1, y=frag23_sub$E2)
-
-base + geom_point(aes(x=S1,y=E2)) 
 
 ## color points if country is on the worst quartile of Total
 frag23_sub$Total>=q3_Total
@@ -102,10 +92,6 @@ frag23_sub$worstQt=frag23_sub$Total>=q3_Total
 plot(frag23_sub$S1, 
      frag23_sub$E2,pch=20,
      col = as.factor(frag23_sub$worstQt))
-
-base=ggplot(data = frag23_sub)
-base + geom_point(aes(x=S1,y=E2,color=worstQt)) 
-
 
 
 # visual of the regression P1 and E2 on S1
