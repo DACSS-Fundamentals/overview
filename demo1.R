@@ -31,7 +31,7 @@ head(x = fragility23,10)
 ##show me the last 10 rows
 tail(fragility23,10)
 
-# transformativs manipulation
+# transformative manipulation
 
 ## keep some columns: 
 ##Country, Total,
@@ -39,7 +39,9 @@ tail(fragility23,10)
 ## P1: State Legitimacy,
 ## E2: Economic Inequality
 ## into object 'frag23_sub'
-grep(pattern = "Country|S1|P1|E2|Total",x = names(fragility23),fixed = F,value = T) # test
+
+
+grep(pattern = "Cou|S1|P1|E2|otal",x = names(fragility23),fixed = F,value = T) # test
 
 keep=grep("Country|S1|P1|E2|Total",names(fragility23),fixed = F,value = T)
 frag23_sub=fragility23[,keep]
